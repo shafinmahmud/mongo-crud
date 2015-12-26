@@ -4,6 +4,14 @@
 <meta charset="UTF-8"></meta>
 <title>Insert title here</title>
 </head>
-<body>HELLOW!!!!
+<body>
+	<h2><span th:text="${news.source}">Newspaper Name</span></h2>
+    <h1><span th:text="${news.title}">It's a template heading</span></h1>
+    
+    <p><span th:text="${news.postTime}">time of post</span></p>
+    <p><span th:text="${news.article}">article</span></p>
+    
+    
+    <p><span th:text="${news.writter}">writter</span></p>
 </body>
 </html>

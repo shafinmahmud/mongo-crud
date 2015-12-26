@@ -1,5 +1,7 @@
 package shafin.web.mongocrud.model;
 
+import java.util.ArrayList;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -21,7 +23,7 @@ public class News {
 	@Field
 	private String article;
 	@Field
-	private NewsPhoto newsPhoto;
+	private ArrayList<NewsPhoto> newsPhoto;
 
 	public News() {
 	}
@@ -82,11 +84,11 @@ public class News {
 		this.article = article;
 	}
 
-	public NewsPhoto getNewsPhoto() {
+	public ArrayList<NewsPhoto> getNewsPhoto() {
 		return newsPhoto;
 	}
 
-	public void setNewsPhoto(NewsPhoto newsPhoto) {
+	public void setNewsPhoto(ArrayList<NewsPhoto> newsPhoto) {
 		this.newsPhoto = newsPhoto;
 	}
 

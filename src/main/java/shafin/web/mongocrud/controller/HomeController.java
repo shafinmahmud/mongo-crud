@@ -1,10 +1,11 @@
 package shafin.web.mongocrud.controller;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -13,18 +14,22 @@ import shafin.web.mongocrud.service.NewsService;
 
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	NewsService newsService;
-	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model){
-		
-		Iterator<News> all = newsService.getAllNews();
-		while(all.hasNext()){
-			System.out.println(all.next().getTitle());
+
+	@ModelAttribute("news")
+	public News prepareNewsDataModel() {
+		ArrayList<News> all = newsService.getAllNewsList();
+		if (!all.isEmpty()) {
+			return all.get(0);
 		}
-		return "home";	
+		return null;
+	}
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String home(Model model) {
+		prepareNewsDataModel();
+		return "home";
 	}
 }
-

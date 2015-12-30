@@ -19,10 +19,11 @@ public class HomeController {
 	NewsService newsService;
 
 	@ModelAttribute("news")
-	public News prepareNewsDataModel() {
+	public ArrayList<News> prepareNewsDataModel() {
 		ArrayList<News> all = newsService.getAllNewsList();
 		if (!all.isEmpty()) {
-			return all.get(0);
+			//System.out.println(all.get(1).getArticle());
+			return all;
 		}
 		return null;
 	}

@@ -18,7 +18,7 @@ public class HomeController {
 	@Autowired
 	NewsService newsService;
 
-	@ModelAttribute("news")
+	@ModelAttribute("newsList")
 	public ArrayList<News> prepareNewsDataModel() {
 		ArrayList<News> all = newsService.getAllNewsList();
 		if (!all.isEmpty()) {

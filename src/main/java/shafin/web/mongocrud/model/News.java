@@ -13,7 +13,13 @@ public class News {
 	@Field
 	private String source;
 	@Field
-	private String category;
+	private String sourceLogo;
+	@Field
+	private String newsUrl;
+	@Field
+    private ArrayList<String> categoryTags;
+	@Field
+	private ArrayList<String> keywords;
 	@Field
 	private String title;
 	@Field
@@ -44,13 +50,22 @@ public class News {
 		this.source = source;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getSourceLogo() {
+		return sourceLogo;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setSourceLogo(String sourceLogo) {
+		this.sourceLogo = sourceLogo;
 	}
+
+	public String getNewsUrl() {
+		return newsUrl;
+	}
+
+	public void setNewsUrl(String newsUrl) {
+		this.newsUrl = newsUrl;
+	}
+	
 
 	public String getTitle() {
 		return title;
@@ -59,7 +74,22 @@ public class News {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
+	public ArrayList<String> getCategoryTags() {
+		return categoryTags;
+	}
 
+	public void setCategoryTags(ArrayList<String> categoryTags) {
+		this.categoryTags = categoryTags;
+	}
+
+	public ArrayList<String> getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(ArrayList<String> keywords) {
+		this.keywords = keywords;
+	}
 	public String getWritter() {
 		return writter;
 	}

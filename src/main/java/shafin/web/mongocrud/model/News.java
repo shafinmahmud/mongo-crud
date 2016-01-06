@@ -29,7 +29,7 @@ public class News {
 	@Field
 	private String article;
 	@Field
-	private ArrayList<NewsPhoto> newsPhoto;
+	private ArrayList<NewsPhoto> newsPhotos;
 
 	public News() {
 	}
@@ -114,12 +114,21 @@ public class News {
 		this.article = article;
 	}
 
-	public ArrayList<NewsPhoto> getNewsPhoto() {
-		return newsPhoto;
+	public ArrayList<NewsPhoto> getNewsPhotos() {
+		return newsPhotos;
 	}
 
-	public void setNewsPhoto(ArrayList<NewsPhoto> newsPhoto) {
-		this.newsPhoto = newsPhoto;
+	public void setNewsPhotos(ArrayList<NewsPhoto> newsPhotos) {
+		this.newsPhotos = newsPhotos;
 	}
+
+	@Override
+	public String toString() {
+		return "News [id=" + id + ", source=" + source + ", sourceLogo=" + sourceLogo + ", newsUrl=" + newsUrl
+				+ ", categoryTags=" + categoryTags + ", keywords=" + keywords + ", title=" + title + ", writter="
+				+ writter + ", postTime=" + postTime + ", article=" + article + ", newsPhotos=" + newsPhotos + "]";
+	}
+	
+	
 
 }

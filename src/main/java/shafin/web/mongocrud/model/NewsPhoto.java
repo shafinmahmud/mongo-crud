@@ -39,6 +39,11 @@ public class NewsPhoto {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
+
+	@Override
+	public String toString() {
+		return "NewsPhoto [id=" + id + ", imageTag=" + imageTag + ", imageUrl=" + imageUrl + "]";
+	}
 	
 	
 	

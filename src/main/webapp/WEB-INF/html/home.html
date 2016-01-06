@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8"></meta>
@@ -26,25 +26,26 @@
 					<table id="mytable" class="table table-bordred table-striped">
 
 						<thead>
-							<th class="col-md-1"><input type="checkbox" id="checkall" /></th>
-							<th class="col-md-2">News Source</th>
+							<th class="col-md-0"><input type="checkbox" id="checkall" /></th>
+							<th class="col-md-2">Source</th>
 							<th class="col-md-5">News Title</th>
-							<th class="col-md-2">Post Time</th>
+							<th class="col-md-3">Post Time</th>
 							<th class="col-md-1">Edit</th>
 							<th class="col-md-1">Delete</th>
 						</thead>
 						<tbody>
 
-							<tr th:each="news : ${newsList}">
+							<tr th:each="news, rowStat: *{newsList}">
 								<td><input type="checkbox" class="checkthis" /></td>
 								<td th:text="${news.source}">Newspaper</td>
-								<td><a href="#view-news" th:href="'#'+${news.id}"
-									th:text="${news.title}" data-toggle="modal">Title</a> 
+								<td><a href="#view-news"
+									th:href="'#view-news'+${rowStat.index}" th:text="${news.title}"
+									data-toggle="modal">Title</a> 
 									
 									<!--  Modal starts -->
-									<div class="modal fade" id="view-news" th:id="${news.id}"
-										tabindex="-1" role="dialog" aria-labelledby="edit"
-										aria-hidden="true">
+									<div class="modal fade" id="view-news"
+										th:id="'view-news'+${rowStat.index}" tabindex="-1"
+										role="dialog" aria-labelledby="edit" aria-hidden="true">
 										<div class="modal-dialog">
 											<div class="modal-content">
 												<div class="modal-header">
@@ -68,14 +69,7 @@
 														<p th:text="${news.article}">The players of the
 															Bangladesh national football team and part of its
 															coaching staff were left stranded at the Taj Hotel in
-															Trivandrum, Kerala yesterday after most of the team
-															officials left for Dhaka by an early morning flight. Six
-															of the team officials -- team leader Iqbal Hossain, team
-															manager Amirul Islam Babu, media manager, team doctor, a
-															Bangladesh Football Federation (BFF) observer, a
-															representative of a BFF vice-president and head coach
-															Maruful Haque -- were part of the contingent which took
-															the early flight.</p>
+															Trivandrum</p>
 													</div>
 													<div class="modal-footer ">
 														<button type="button" class="btn btn-warning btn-lg"
@@ -97,14 +91,18 @@
 								<td>
 									<p data-placement="top" data-toggle="tooltip" title="Edit">
 										<button class="btn btn-primary btn-xs" data-title="Edit"
-											data-toggle="modal" href="#edit" th:href="'#edit'+${news.id}">
+											data-toggle="modal" href="#edit-news"
+											th:href="'#edit-news'+${rowStat.index}">
 											<span class="glyphicon glyphicon-pencil"></span>
 										</button>
-									</p>
+									</p> 
 									
-								  <!-- Modal -->
-									<div class="modal fade" id="edit" th:id="edit+${news.id}" tabindex="-1" role="dialog"
-										aria-labelledby="edit" aria-hidden="true">
+									
+									
+									<!-- Modal -->
+									<div class="modal fade" id="edit-news"
+										th:id="'edit-news'+${rowStat.index}" tabindex="-1"
+										role="dialog" aria-labelledby="edit" aria-hidden="true">
 										<div class="modal-dialog">
 											<div class="modal-content">
 												<div class="modal-header">
@@ -117,49 +115,95 @@
 														News</h4>
 												</div>
 												<div class="modal-body">
-													<div class="form-group">
-														<input class="form-control " type="text"
-															placeholder="Source" />
-													</div>
-													<div class="form-group">
-														<input class="form-control " type="text"
-															placeholder="Source Logo" />
-													</div>
-													<div class="form-group">
-														<input class="form-control " type="text"
-															placeholder="News URL" />
-													</div>
-													<div class="form-group">
-														<input class="form-control " type="text"
-															placeholder="News Title" />
-													</div>
-													<div class="form-group">
-														<input class="form-control " type="text"
-															placeholder="Cateogry" />
-													</div>
-													<div class="form-group">
-														<input class="form-control " type="text"
-															placeholder="Key Words" />
-													</div>
-													<div class="form-group">
-														<input class="form-control " type="text"
-															placeholder="Writter" />
-													</div>
-													<div class="form-group">
-														<input class="form-control " type="text"
-															placeholder="Post Time" />
-													</div>
-													<div class="form-group">
-														<textarea rows="2" class="form-control"
-															placeholder="Article "></textarea>
-													</div>
+													<form action="#" th:action="@{/updateNews}"
+														th:object="${newsList[__${rowStat.index}__]}" method="post">
+
+														<div class="form-group inline">
+															<label for="categories">News Photos </label>
+															<th:block th:each="photo: ${news.newsPhotos}"
+																name="newsPhotos">
+																<div name="photo">
+																	<input class="form-control " type="text"
+																		name="imageTag" th:value="${photo.imageTag}"
+																		placeholder="Photo Tag" /> <input
+																		class="form-control " type="text" name="imageUrl"
+																		th:value="${photo.imageUrl}" placeholder="Photo link" />
+																</div>
+
+															</th:block>
+														</div>
+
+														<input  th:field="*{newsList[__${rowStat.index}__].id}"
+															type="hidden" />
+
+
+														<div class="form-group">
+															<label for="news-source">Source </label> <input
+																class="form-control " type="text" placeholder="Source"
+																th:field="*{newsList[__${rowStat.index}__].source}" />
+														</div>
+														<!-- 
+														<div class="form-group">
+															<label for="source-logo">Newspaper Logo</label> <input
+																class="form-control " type="text"
+																placeholder="Source Logo" name="sourceLogo"
+																th:value="${news.sourceLogo}" />
+														</div>
+														<div class="form-group">
+															<label for="news-url">News link </label> <input
+																class="form-control " type="text" placeholder="News URL"
+																name="newsUrl" th:value="${news.newsUrl}" />
+														</div>
+														<div class="form-group">
+															<label for="news-title">Title </label> <input
+																class="form-control " type="text"
+																placeholder="News Title" name="title"
+																th:value="${news.title}" />
+														</div>
+														<div class="form-group inline">
+															<label for="categories">Category Tags </label>
+															<th:block th:each="tag: ${news.categoryTags}">
+																<input class="form-control" type="text"
+																	name="categoryTags" th:value="${tag}"
+																	placeholder="Category" />
+															</th:block>
+														</div>
+
+
+														<div class="form-group">
+															<label for="keywords">Keywords </label> <input
+																class="form-control " type="text" name="keywords"
+																th:each="keyw: ${news.keywords}" th:value="${keyw}"
+																placeholder="Key Words" />
+														</div>
+														<div class="form-group">
+															<label for="writter">Reporter </label> <input
+																class="form-control " type="text" placeholder="Writter"
+																name="reporter" th:value="${news.writter}" />
+														</div>
+														<div class="form-group">
+															<label for="news-time">News time </label> <input
+																class="form-control " type="text"
+																placeholder="Post Time" name="postTime"
+																th:value="${news.postTime}" />
+														</div>
+														<div class="form-group">
+															<label for="news-article">Article</label>
+															<textarea rows="7" class="form-control"
+																placeholder="Article" name="article" th:inline="text">[[${news.article}]]</textarea>
+														</div>
+ -->
+														<button type="submit"
+															class="btn btn-warning btn-md pull-right"
+															style="width: 25%;">
+															<span class="glyphicon glyphicon-ok-sign"></span>  Update
+														</button>
+													</form>
+
 												</div>
-												<div class="modal-footer ">
-													<button type="button" class="btn btn-warning btn-lg"
-														style="width: 25%;">
-														<span class="glyphicon glyphicon-ok-sign"></span> Update
-													</button>
-												</div>
+												<br></br> <br></br>
+												<div class="modal-footer "></div>
+
 											</div>
 											<!-- /.modal-content -->
 										</div>

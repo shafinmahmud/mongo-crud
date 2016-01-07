@@ -19,7 +19,7 @@ public class NewsService {
 			return newsRepository.save(news);
 	}
 	
-	public Iterator<News> getAllNews(){
+	public Iterator<News> getAllNewsIterator(){
 		return newsRepository.findAll().iterator();
 	}
 	
@@ -27,6 +27,10 @@ public class NewsService {
 		return makeCollection(newsRepository.findAll());
 	}
 
+	public News getNews(String _id){
+		return newsRepository.findOne(_id);
+	}
+	
 	public static <E> ArrayList<E> makeCollection(Iterable<E> iter) {
 	    ArrayList<E> list = new ArrayList<E>();
 	    for (E item : iter) {

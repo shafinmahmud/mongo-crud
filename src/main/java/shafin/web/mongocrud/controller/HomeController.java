@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import shafin.web.mongocrud.dto.NewsDto;
 import shafin.web.mongocrud.model.News;
 import shafin.web.mongocrud.service.NewsService;
 
@@ -20,12 +21,16 @@ public class HomeController {
 	NewsService newsService;
 
 	@ModelAttribute("newsList")
-	public ArrayList<News> prepareNewsListModel() {
+	public ArrayList<NewsDto> prepareNewsListModel() {
 		ArrayList<News> all = newsService.getAllNewsList();
+		ArrayList<NewsDto> dtos = new ArrayList<>();
 		if (!all.isEmpty()) {
-			return all;
+			for (News news : all) {		
+				dtos.add(convertToDto(news));
+			}
+			return dtos;
 		}
-		return null;
+		return dtos;
 	}
 	
 
@@ -43,15 +48,31 @@ public class HomeController {
 	
 	@RequestMapping(value = "/news/edit", params = {"id"}, method = RequestMethod.GET)
 	public String showEdit(@RequestParam("id") String id, Model model) {
-		//System.out.println(id);
-		model.addAttribute("newsUpdate", newsService.getNews(id));
+		
+		model.addAttribute("newsUpdate", convertToDto(newsService.getNews(id)));
 		return "edit";
 	}
 	
 	@RequestMapping(value = "/news/update", method = RequestMethod.POST)
-	public String processNewsUpdate(@ModelAttribute(value="newsUpdate") News newsUpdate) {
+	public String processNewsUpdate(@ModelAttribute(value="newsUpdate") NewsDto newsUpdate) {
 		System.out.println(newsUpdate.toString());
 		return "/news?id="+newsUpdate.getId();
+	}
+	
+	private NewsDto convertToDto(News news){
+		NewsDto dto = new NewsDto();
+		dto.setId(news.getId());
+		dto.setSource(news.getSource());
+		dto.setSourceLogo(news.getSourceLogo());
+		dto.setNewsUrl(news.getNewsUrl());
+		dto.setCategoryTags(news.getCategoryTags(),";");
+		dto.setTitle(news.getTitle());
+		dto.setArticle(news.getArticle());
+		dto.setAuthor(news.getAuthor());
+		dto.setPostTime(news.getPostTime());
+		dto.setKeywords(news.getKeywords(),";");
+		dto.setNewsPhotos(news.getNewsPhotos());
+		return dto;
 	}
 	
 }

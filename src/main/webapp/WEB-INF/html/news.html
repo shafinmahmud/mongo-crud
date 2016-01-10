@@ -8,11 +8,33 @@
 <link rel="stylesheet"
 	href="../resources/lib/bootstrap/css/bootstrap.min.css"
 	th:href="@{/resources/lib/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../resources/css/header.css"
+	th:href="@{/resources/css/header.css}" />
 
 
 </head>
 
 <body>
+	<div id="custom-bootstrap-menu" class="navbar navbar-default "
+		role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="home.html">NEWS HuB</a>
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-menubuilder">
+					<span class="sr-only">Toggle navigation</span><span
+						class="icon-bar"></span><span class="icon-bar"></span><span
+						class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse navbar-menubuilder">
+				<ul class="nav navbar-nav navbar-left">
+					<li><a href="./home.html">Home</a></li>
+					<li><a href="./edit.html">Add News</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 
 	<div class="container col-lg-12 main">
 		<div class="col-lg-12 post">
@@ -20,24 +42,44 @@
 
 				<img
 					src="http://paimages.prothom-alo.com/contents/themes/public/style/images/Prothom-Alo.jpg"
-					th:src="@{${news.sourceLogo}}" th:alt="${news.source}" /> 
-				<a
+					th:src="@{${news.sourceLogo}}" th:alt="${news.source}" /> <a
 					class="btn btn-primary btn-xs" data-title="Edit" href="./edit.html"
-					th:href="@{/news/edit(id=${news.id})}"> <span class="glyphicon glyphicon-pencil"></span>
+					th:href="@{/news/edit(id=${news.id})}"> <span
+					class="glyphicon glyphicon-pencil"></span>
 				</a>
 
 				<hr style="margin: 8px auto; border-bottom: 1px solid #ccc;"></hr>
 				<h2>
-					<a href="" th:href="@{${news.newsUrl}}" th:text="${news.title}" class="ubuntu">
-					Celebration</a>
+					<a href="" th:href="@{${news.newsUrl}}" th:text="${news.title}"
+						class="ubuntu"> Celebration</a>
 				</h2>
 				<div class="body-text">
 
-					<p class='text-muted ubuntu' th:text="${news.writter}+' | '+${news.postTime}">
-					By Sohrab Hossain with Andrew Eagle | 03:13 AM, January 07, 2016</p>
+					<p class='text-muted ubuntu'
+						th:text="${news.author}+' | '+${news.postTime}">By Sohrab
+						Hossain with Andrew Eagle | 03:13 AM, January 07, 2016</p>
 					<br></br>
 					<div class="row">
-						<div class="col-lg-8" th:text="${news.article}">
+						<div class="col-lg-8"
+							th:each="photo, rowStat: ${news.newsPhotos}">
+							<figure class="figure">
+								<img height="20%"
+									src=""
+									th:src="@{${photo.imageUrl}}"
+									class="figure-img img-fluid img-responsive" alt="News image">
+								</img>
+								<figcaption class="figure-caption" ><strong>Caption: </strong>
+									<em th:text="${photo.imageCaption}">
+										Mushfiqur Rahim (L) and Shakib Al Hasan (R) take a
+										short break after attending a batting session at the Sheikh
+										Abu Naser Stadium in Khulna yesterday, while Saqlain Sajib is
+										busy doing his stretches. Photo: Star
+									</em>
+								</figcaption>
+							</figure>
+							<br></br>
+						</div>
+						<div class="col-lg-10" th:text="${news.article}">
 							<p>Sometimes nature whispers of fragility or
 								interconnectedness. Sometimes it offers contemplation in moments
 								of deep silence. At other times nature shouts. When the
@@ -47,7 +89,7 @@
 								are broad and unstoppable then, as they move about in country
 								boats collecting delicate petal parcels. A boy clutches a bundle
 								of lily stems triumphantly. A girl tries out a blossom as
-								adornment for her hair... </p>
+								adornment for her hair...</p>
 
 							<p>“I can get up to five taka per bundle of twenty stems,
 								which gives a daily income of around 250 taka.” From selling

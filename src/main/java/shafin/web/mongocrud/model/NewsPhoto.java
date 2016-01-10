@@ -9,7 +9,7 @@ public class NewsPhoto {
 	@Field
 	private String id;	
 	@Field
-	private String imageTag;	
+	private String imageCaption;	
 	@Field
 	private String imageUrl;
 
@@ -24,12 +24,12 @@ public class NewsPhoto {
 		this.id = id;
 	}
 
-	public String getImageTag() {
-		return imageTag;
+	public String getImageCaption() {
+		return imageCaption;
 	}
 
-	public void setImageTag(String imageTag) {
-		this.imageTag = imageTag;
+	public void setImageCaption(String caption) {
+		this.imageCaption = caption;
 	}
 
 	public String getImageUrl() {
@@ -42,7 +42,7 @@ public class NewsPhoto {
 
 	@Override
 	public String toString() {
-		return "NewsPhoto [id=" + id + ", imageTag=" + imageTag + ", imageUrl=" + imageUrl + "]";
+		return "NewsPhoto [id=" + id + ", imageCaption=" + imageCaption + ", imageUrl=" + imageUrl + "]";
 	}
 	
 	

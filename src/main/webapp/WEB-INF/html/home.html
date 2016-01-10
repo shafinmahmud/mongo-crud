@@ -8,27 +8,42 @@
 <link rel="stylesheet"
 	href="../resources/lib/bootstrap/css/bootstrap.min.css"
 	th:href="@{/resources/lib/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../resources/css/header.css"
+	th:href="@{/resources/css/header.css}" />
+
 
 
 </head>
 
 <body>
+	<div id="custom-bootstrap-menu" class="navbar navbar-default "
+		role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="home.html">NEWS HuB</a>
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-menubuilder">
+					<span class="sr-only">Toggle navigation</span><span
+						class="icon-bar"></span><span class="icon-bar"></span><span
+						class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse navbar-menubuilder">
+				<ul class="nav navbar-nav navbar-left">
+					<li><a href="./home.html">Home</a></li>
+					<li><a href="./edit.html">Add News</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 
 	<!-- -->
 	<div class="container">
 		<div class="row">
 
 			<div class="col-md-12">
-				<h4>NEWS HuB</h4>
-				<a class="btn btn-primary btn-xs" data-title="Add News"
-					 href="./edit.html" th:href="@{/add}">
-					<span class="glyphicon glyphicon-pencil">Add news</span>
-				</a>
 				<div class="table-responsive">
-
-
 					<table id="mytable" class="table table-bordred table-striped">
-
 						<thead>
 							<th class="col-md-0"><input type="checkbox" id="checkall" /></th>
 							<th class="col-md-2">Source</th>
@@ -41,11 +56,10 @@
 							<tr th:each="news, rowStat: *{newsList}">
 								<td><input type="checkbox" class="checkthis" /></td>
 								<td th:text="${news.source}">Newspaper</td>
-								<td><a href="./news.html"
-									th:href="@{/news(id=${news.id})}" th:text="${news.title}">Title</a>
-								</td>
+								<td><a href="./news.html" th:href="@{/news(id=${news.id})}"
+									th:text="${news.title}">Title</a></td>
 								<td th:text="${news.postTime}">news time stamp</td>
-							
+
 								<td>
 									<p data-placement="top" data-toggle="tooltip" title="Delete">
 										<button class="btn btn-danger btn-xs" data-title="Delete"
@@ -53,8 +67,6 @@
 											<span class="glyphicon glyphicon-trash"></span>
 										</button>
 									</p>
-									
-									
 								</td>
 							</tr>
 
@@ -81,11 +93,7 @@
 		</div>
 	</div>
 
-
-
-	
-
-
+	<!--         -->
 
 	<script src="../resources/lib/jquery-2.1.4.min.js"
 		th:src="@{/resources/lib/jquery-2.1.4.min.js}" type="text/javascript">

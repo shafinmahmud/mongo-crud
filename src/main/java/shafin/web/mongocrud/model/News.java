@@ -1,5 +1,6 @@
 package shafin.web.mongocrud.model;
 
+import java.awt.List;
 import java.util.ArrayList;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -23,7 +24,7 @@ public class News {
 	@Field
 	private String title;
 	@Field
-	private String writter;
+	private String author;
 	@Field
 	private String postTime;
 	@Field
@@ -90,12 +91,12 @@ public class News {
 	public void setKeywords(ArrayList<String> keywords) {
 		this.keywords = keywords;
 	}
-	public String getWritter() {
-		return writter;
+	public String getAuthor() {
+		return author;
 	}
 
-	public void setWritter(String writter) {
-		this.writter = writter;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	public String getPostTime() {
@@ -121,12 +122,12 @@ public class News {
 	public void setNewsPhotos(ArrayList<NewsPhoto> newsPhotos) {
 		this.newsPhotos = newsPhotos;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "News [id=" + id + ", source=" + source + ", sourceLogo=" + sourceLogo + ", newsUrl=" + newsUrl
-				+ ", categoryTags=" + categoryTags + ", keywords=" + keywords + ", title=" + title + ", writter="
-				+ writter + ", postTime=" + postTime + ", article=" + article + ", newsPhotos=" + newsPhotos + "]";
+				+ ", categoryTags=" + categoryTags + ", keywords=" + keywords + ", title=" + title + ", author="
+				+ author + ", postTime=" + postTime + ", article=" + article + ", newsPhotos=" + newsPhotos + "]";
 	}
 	
 	

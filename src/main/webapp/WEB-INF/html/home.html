@@ -20,7 +20,7 @@
 		role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="home.html">NEWS HuB</a>
+				<a class="navbar-brand" href="home.html" th:href="@{/}" >NEWS HuB</a>
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target=".navbar-menubuilder">
 					<span class="sr-only">Toggle navigation</span><span
@@ -30,8 +30,8 @@
 			</div>
 			<div class="collapse navbar-collapse navbar-menubuilder">
 				<ul class="nav navbar-nav navbar-left">
-					<li><a href="./home.html">Home</a></li>
-					<li><a href="./edit.html">Add News</a></li>
+					<li><a href="./home.html" th:href="@{/}">Home</a></li>
+					<li><a href="./edit.htm">Add News</a></li>
 				</ul>
 			</div>
 		</div>

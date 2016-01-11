@@ -20,7 +20,7 @@
 		role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="home.html">NEWS HuB</a>
+				<a class="navbar-brand" href="home.html" th:href="@{/}">NEWS HuB</a>
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target=".navbar-menubuilder">
 					<span class="sr-only">Toggle navigation</span><span
@@ -30,194 +30,205 @@
 			</div>
 			<div class="collapse navbar-collapse navbar-menubuilder">
 				<ul class="nav navbar-nav navbar-left">
-					<li><a href="./home.html">Home</a></li>
-					<li><a href="./edit.html">Add News</a></li>
+					<li><a href="./home.html" th:href="@{/}">Home</a></li>
+					<li><a href="./edit.htm">Add News</a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 
-	<form class="form-horizontal" action="#" th:action="@{/news/update}"
-		th:object="${newsUpdate}" method="post">
-		<fieldset>
+	<legend></legend>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
 
-			<!-- Form Name -->
-			<legend></legend>
+				<form class="form-horizontal" action="#" th:action="@{/news/update}"
+					th:object="${newsUpdate}" method="post">
+					<fieldset>
 
-			<!-- News url input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="url">News url</label>
-				<div class="col-md-4">
-					<div class="input-group">
-						<input id="url" name="newsUrl" class="form-control"
-							placeholder="placeholder" type="text" th:field="*{newsUrl}">
-						<span class="input-group-btn">
-							<button id="crawl" name="crawl" class="btn btn-danger">crawl</button>
-						</span> </input>
-					</div>
-					<p class="help-block"></p>
-				</div>
-			</div>
-
-			<!-- News source input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="source">Source</label>
-				<div class="col-md-4">
-					<input id="source" name="source" type="text" placeholder="source"
-						class="form-control input-md" th:field="*{source}"> </input> <span
-						class="help-block"></span>
-				</div>
-			</div>
-
-			<!-- News source logo input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="logo">Source logo</label>
-				<div class="col-md-4">
-					<div class="input-group">
-						<input id="logo" name="logo" class="form-control"
-							placeholder="placeholder" type="text" th:field="*{sourceLogo}">
-						<span class="input-group-btn">
-							<button id="view" type="button" class="btn btn-info"
-								data-toggle="modal" data-target="#view-logo">view</button>
-						</span> </input>
-					</div>
-					<p class="help-block"></p>
-				</div>
-			</div>
-
-			<!-- News category input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="source">Category
-					tags</label>
-				<div class="col-md-4">
-					<input id="tags" name="tags" type="text" th:field="*{categoryTags}"
-						placeholder="category tags" class="form-control input-md">
-					</input> <span class="help-block"></span>
-				</div>
-			</div>
-
-			<!-- News keyword input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="source">Keywords</label>
-				<div class="col-md-4">
-					<input id="keywords" name="keywords" type="text"
-						th:field="*{keywords}" placeholder="keywords"
-						class="form-control input-md"> </input> <span class="help-block"></span>
-				</div>
-			</div>
-
-			<!-- News title input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="title">Title</label>
-				<div class="col-md-4">
-					<input id="title" name="title" type="text" placeholder="title"
-						class="form-control input-md" th:field="*{title}"> </input> <span
-						class="help-block"></span>
-				</div>
-			</div>
-
-			<!-- News writter input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="author">Writter</label>
-				<div class="col-md-4">
-					<input id="author" name="author" type="text" placeholder="author"
-						class="form-control input-md" th:field="*{author}"> </input> <span
-						class="help-block"></span>
-				</div>
-			</div>
-
-			<!-- News post time input-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="time">Post time</label>
-				<div class="col-md-4">
-					<input id="time" name="time" type="text" placeholder="post time"
-						class="form-control input-md" th:field="*{postTime}"> </input> <span
-						class="help-block"></span>
-				</div>
-			</div>
-
-			<!-- News photo input -->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="photo">News
-					photos</label>
-				<div class="col-md-4" th:each="photo, rowStat: *{newsPhotos}">
-					<div class="col-md-12">
-						<div class="input-group">
-							<input name="photoUrl" class="form-control"
-								placeholder="placeholder" type="text"
-								th:field="*{newsPhotos[__${rowStat.index}__].imageUrl}">
-							<span class="input-group-btn">
-								<button id="view-photo" type="button" class="btn btn-info"
-									data-toggle="modal" data-target="#view-photo"
-									th:attr="data-target='#view-photo'+${rowStat.index}">view</button>
-							</span> </input>
-
+						<!-- News url input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="url">News url</label>
+							<div class="col-md-4">
+								<div class="input-group">
+									<input id="url" name="newsUrl" class="form-control"
+										placeholder="placeholder" type="text" th:field="*{newsUrl}">
+									<span class="input-group-btn">
+										<button id="crawl" name="crawl" class="btn btn-danger">crawl</button>
+									</span> </input>
+								</div>
+								<p class="help-block"></p>
+							</div>
 						</div>
-						<textarea style="width: 100%" class="form-control" id=""
-							name="article"
-							th:field="*{newsPhotos[__${rowStat.index}__].imageCaption}"></textarea>
-						<p class="help-block"></p>
-					</div>
 
-					<!--  Modal starts -->
-					<div id="view-photo" class="modal fade"
-						th:id="view-photo+${rowStat.index}" tabindex="-1" role="dialog"
-						aria-labelledby="edit" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"
-										aria-hidden="true">
-										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-									</button>
-									<figure class="figure">
-										<img height="20%" src="" th:src="@{*{newsPhotos[__${rowStat.index}__].imageUrl}}"
-											class="figure-img img-fluid img-responsive" alt="News image">
-										</img>
-										<figcaption class="figure-caption">
-											<strong>Caption: </strong> <em
-												th:text="${photo.imageCaption}"> Mushfiqur Rahim (L)
-												and Shakib Al Hasan (R) take a short break after attending a
-												batting session at the Sheikh Abu Naser Stadium in Khulna
-												yesterday, while Saqlain Sajib is busy doing his stretches.
-												Photo: Star </em>
-										</figcaption>
-									</figure>
+						<!-- News source input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="source">Source</label>
+							<div class="col-md-4">
+								<input id="source" name="source" type="text"
+									placeholder="source" class="form-control input-md"
+									th:field="*{source}"> </input> <span class="help-block"></span>
+							</div>
+						</div>
+
+						<!-- News source logo input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="logo">Source
+								logo</label>
+							<div class="col-md-4">
+								<div class="input-group">
+									<input id="logo" name="logo" class="form-control"
+										placeholder="placeholder" type="text" th:field="*{sourceLogo}">
+									<span class="input-group-btn">
+										<button id="view" type="button" class="btn btn-info"
+											data-toggle="modal" data-target="#view-logo">view</button>
+									</span> </input>
+								</div>
+								<p class="help-block"></p>
+							</div>
+						</div>
+
+						<!-- News category input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="source">Category
+								tags</label>
+							<div class="col-md-4">
+								<input id="tags" name="tags" type="text"
+									th:field="*{categoryTags}" placeholder="category tags"
+									class="form-control input-md"> </input> <span
+									class="help-block"></span>
+							</div>
+						</div>
+
+						<!-- News keyword input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="source">Keywords</label>
+							<div class="col-md-4">
+								<input id="keywords" name="keywords" type="text"
+									th:field="*{keywords}" placeholder="keywords"
+									class="form-control input-md"> </input> <span
+									class="help-block"></span>
+							</div>
+						</div>
+
+						<!-- News title input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="title">Title</label>
+							<div class="col-md-4">
+								<input id="title" name="title" type="text" placeholder="title"
+									class="form-control input-md" th:field="*{title}"> </input> <span
+									class="help-block"></span>
+							</div>
+						</div>
+
+						<!-- News writter input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="author">Writter</label>
+							<div class="col-md-4">
+								<input id="author" name="author" type="text"
+									placeholder="author" class="form-control input-md"
+									th:field="*{author}"> </input> <span class="help-block"></span>
+							</div>
+						</div>
+
+						<!-- News post time input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="time">Post
+								time</label>
+							<div class="col-md-4">
+								<input id="time" name="time" type="text" placeholder="post time"
+									class="form-control input-md" th:field="*{postTime}"> </input>
+								<span class="help-block"></span>
+							</div>
+						</div>
+
+						<!-- News photo input -->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="photo">News
+								photos</label>
+							<div class="col-md-4" th:each="photo, rowStat: *{newsPhotos}">
+								<div>
+									<div class="input-group">
+										<input name="photoUrl" class="form-control"
+											placeholder="placeholder" type="text"
+											th:field="*{newsPhotos[__${rowStat.index}__].imageUrl}">
+										<span class="input-group-btn">
+											<button id="view-photo" type="button" class="btn btn-info"
+												data-toggle="modal" data-target="#view-photo"
+												th:attr="data-target='#view-photo'+${rowStat.index}">view</button>
+										</span> </input>
+
+									</div>
+									<textarea class="form-control"
+										th:attr="id='cap_textarea'+${rowStat.index}" name="article"
+										th:field="*{newsPhotos[__${rowStat.index}__].imageCaption}"></textarea>
+									<p class="help-block"></p>
 								</div>
 
-								<!-- /.modal-content -->
+
+								<!--  Modal starts -->
+								<div id="view-photo" class="modal fade"
+									th:id="view-photo+${rowStat.index}" tabindex="-1" role="dialog"
+									aria-labelledby="edit" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal"
+													aria-hidden="true">
+													<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+												</button>
+												<figure class="figure">
+													<img height="20%" src=""
+														th:src="@{*{newsPhotos[__${rowStat.index}__].imageUrl}}"
+														class="figure-img img-fluid img-responsive"
+														alt="News image">
+													</img>
+													<figcaption class="figure-caption">
+														<strong>Caption: </strong> <em
+															th:text="${photo.imageCaption}"> Mushfiqur Rahim (L)
+															and Shakib Al Hasan (R) take a short break after
+															attending a batting session at the Sheikh Abu Naser
+															Stadium in Khulna yesterday, while Saqlain Sajib is busy
+															doing his stretches. Photo: Star </em>
+													</figcaption>
+												</figure>
+											</div>
+
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+								</div>
+								<!--  Modal ends -->
+
 							</div>
-							<!-- /.modal-dialog -->
 						</div>
-					</div>
-					<!--  Modal ends -->
 
-				</div>
+
+						<!-- News article tex-->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="article">Article</label>
+							<div class="col-md-4">
+								<textarea style="width: 100%" class="form-control" id="article"
+									name="article" th:field="*{article}">default text</textarea>
+							</div>
+						</div>
+
+						<!-- Button -->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="singlebutton"></label>
+							<div class="col-md-4">
+								<button type="submit" id="singlebutton" name="singlebutton"
+									class="btn btn-success">Save</button>
+							</div>
+						</div>
+
+					</fieldset>
+				</form>
+
 			</div>
-
-
-			<!-- News article tex-->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="article">Article</label>
-				<div class="col-md-4">
-					<textarea style="width: 100%" class="form-control" id="article"
-						name="article" th:field="*{article}">default text</textarea>
-				</div>
-			</div>
-
-			<!-- Button -->
-			<div class="form-group">
-				<label class="col-md-4 control-label" for="singlebutton"></label>
-				<div class="col-md-4">
-					<button type="submit" id="singlebutton" name="singlebutton"
-						class="btn btn-success">Save</button>
-				</div>
-			</div>
-
-		</fieldset>
-	</form>
-
-
+		</div>
+	</div>
 	<!--  Modal starts -->
 	<div id="view-logo" class="modal fade" th:id="view-logo" tabindex="-1"
 		role="dialog" aria-labelledby="edit" aria-hidden="true">

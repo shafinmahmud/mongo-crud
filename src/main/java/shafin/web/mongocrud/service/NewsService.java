@@ -5,8 +5,6 @@ import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import shafin.web.mongocrud.dto.NewsDto;
 import shafin.web.mongocrud.model.News;
 import shafin.web.mongocrud.repository.NewsRepository;
 
@@ -28,8 +26,20 @@ public class NewsService {
 		return makeCollection(newsRepository.findAll());
 	}
 
+	public News insertNews(News news){
+		return newsRepository.save(news);
+	}
+	
 	public News getNews(String _id){
 		return newsRepository.findOne(_id);
+	}
+	
+	public News updateNews(News news){
+		return newsRepository.save(news);
+	}
+	
+	public void deleteNews(String _id){
+		newsRepository.delete(getNews(_id));
 	}
 	
 	public static <E> ArrayList<E> makeCollection(Iterable<E> iter) {

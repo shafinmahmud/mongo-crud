@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import shafin.web.mongocrud.dto.NewsDto;
 import shafin.web.mongocrud.model.News;
+import shafin.web.mongocrud.model.NewsPhoto;
 import shafin.web.mongocrud.service.NewsService;
 
 @Controller
@@ -26,7 +27,7 @@ public class HomeController {
 		ArrayList<NewsDto> dtos = new ArrayList<>();
 		if (!all.isEmpty()) {
 			for (News news : all) {		
-				dtos.add(convertToDto(news));
+				dtos.add(convertToNewsDto(news));
 			}
 			return dtos;
 		}
@@ -48,18 +49,46 @@ public class HomeController {
 	
 	@RequestMapping(value = "/news/edit", params = {"id"}, method = RequestMethod.GET)
 	public String showEdit(@RequestParam("id") String id, Model model) {
-		
-		model.addAttribute("newsUpdate", convertToDto(newsService.getNews(id)));
+		NewsDto dto = convertToNewsDto(newsService.getNews(id));
+		//System.out.println(dto.toString());
+		model.addAttribute("newsUpdate", dto);
 		return "edit";
 	}
 	
 	@RequestMapping(value = "/news/update", method = RequestMethod.POST)
 	public String processNewsUpdate(@ModelAttribute(value="newsUpdate") NewsDto newsUpdate) {
-		System.out.println(newsUpdate.toString());
-		return "/news?id="+newsUpdate.getId();
+		//System.out.println(newsUpdate.toString());	
+		return "redirect:/news?id="+newsService.updateNews(convertToNews(newsUpdate)).getId();
 	}
 	
-	private NewsDto convertToDto(News news){
+	@RequestMapping(value = "/news/add",method = RequestMethod.GET)
+	public String showAdd(Model model) {
+		NewsDto addNews = new NewsDto();
+		ArrayList<NewsPhoto> photos = new ArrayList<>();
+		
+		NewsPhoto photo = new NewsPhoto();
+		photo.setImageUrl("");
+		photo.setImageCaption("");
+		photos.add(photo);
+		
+		addNews.setNewsPhotos(photos);
+		model.addAttribute("newsAdd", addNews);
+		return "add";
+	}
+	
+	@RequestMapping(value = "/news/insert", method = RequestMethod.POST)
+	public String processNewsAdd(@ModelAttribute(value="newsAdd") NewsDto newsAdd) {	
+		//System.out.println(newsAdd.toString());
+		return "redirect:/news?id="+newsService.insertNews(convertToNews(newsAdd)).getId();
+	}
+	
+	@RequestMapping(value = "/news/delete", params = { "id"}, method = RequestMethod.GET)
+	public String deleteNews(@RequestParam("id") String id) {
+		newsService.deleteNews(id);;
+		return "redirect:/";
+	}
+	
+	private NewsDto convertToNewsDto(News news){
 		NewsDto dto = new NewsDto();
 		dto.setId(news.getId());
 		dto.setSource(news.getSource());
@@ -73,6 +102,22 @@ public class HomeController {
 		dto.setKeywords(news.getKeywords(),";");
 		dto.setNewsPhotos(news.getNewsPhotos());
 		return dto;
+	}
+	
+	private News convertToNews(NewsDto dto){
+		News news = new News();
+		news.setId(dto.getId());
+		news.setSource(dto.getSource());
+		news.setSourceLogo(dto.getSourceLogo());
+		news.setNewsUrl(dto.getNewsUrl());
+		news.setCategoryTags(dto.getCategoryTags(),";");
+		news.setTitle(dto.getTitle());
+		news.setArticle(dto.getArticle());
+		news.setAuthor(dto.getAuthor());
+		news.setPostTime(dto.getPostTime());
+		news.setKeywords(dto.getKeywords(),";");
+		news.setNewsPhotos(dto.getNewsPhotos());
+		return news;
 	}
 	
 }

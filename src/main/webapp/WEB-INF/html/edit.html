@@ -31,7 +31,7 @@
 			<div class="collapse navbar-collapse navbar-menubuilder">
 				<ul class="nav navbar-nav navbar-left">
 					<li><a href="./home.html" th:href="@{/}">Home</a></li>
-					<li><a href="./edit.htm">Add News</a></li>
+					<li><a href="./edit.html" th:href="@{/news/add}">Add News</a></li>
 				</ul>
 			</div>
 		</div>
@@ -45,19 +45,18 @@
 				<form class="form-horizontal" action="#" th:action="@{/news/update}"
 					th:object="${newsUpdate}" method="post">
 					<fieldset>
+						<!-- News id -->
+						<input id="_id" name="id" class="form-control"
+							placeholder="placeholder" type="hidden" th:field="*{id}">
+						</input>
 
 						<!-- News url input-->
 						<div class="form-group">
 							<label class="col-md-4 control-label" for="url">News url</label>
 							<div class="col-md-4">
-								<div class="input-group">
-									<input id="url" name="newsUrl" class="form-control"
-										placeholder="placeholder" type="text" th:field="*{newsUrl}">
-									<span class="input-group-btn">
-										<button id="crawl" name="crawl" class="btn btn-danger">crawl</button>
-									</span> </input>
-								</div>
-								<p class="help-block"></p>
+								<input id="url" name="newsUrl" class="form-control"
+									placeholder="placeholder" type="text" th:field="*{newsUrl}" />
+								<span class="help-block"></span>
 							</div>
 						</div>
 
@@ -77,11 +76,11 @@
 								logo</label>
 							<div class="col-md-4">
 								<div class="input-group">
-									<input id="logo" name="logo" class="form-control"
-										placeholder="placeholder" type="text" th:field="*{sourceLogo}">
+									<input id="logo" name="sourceLogo" class="form-control"
+										placeholder="source logo" type="text" th:field="*{sourceLogo}">
 									<span class="input-group-btn">
-										<button id="view" type="button" class="btn btn-info"
-											data-toggle="modal" data-target="#view-logo">view</button>
+										<button type="button" class="btn btn-info" data-toggle="modal"
+											data-target="#view-logo">view</button>
 									</span> </input>
 								</div>
 								<p class="help-block"></p>
@@ -93,7 +92,7 @@
 							<label class="col-md-4 control-label" for="source">Category
 								tags</label>
 							<div class="col-md-4">
-								<input id="tags" name="tags" type="text"
+								<input id="tags" name="categoryTags" type="text"
 									th:field="*{categoryTags}" placeholder="category tags"
 									class="form-control input-md"> </input> <span
 									class="help-block"></span>
@@ -144,7 +143,7 @@
 
 						<!-- News photo input -->
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="photo">News
+							<label class="col-md-4 control-label" for="photo"> News
 								photos</label>
 							<div class="col-md-4" th:each="photo, rowStat: *{newsPhotos}">
 								<div>
@@ -155,7 +154,8 @@
 										<span class="input-group-btn">
 											<button id="view-photo" type="button" class="btn btn-info"
 												data-toggle="modal" data-target="#view-photo"
-												th:attr="data-target='#view-photo'+${rowStat.index}">view</button>
+												th:attr="data-target='#view-photo'+${rowStat.index}">
+												view</button>
 										</span> </input>
 
 									</div>

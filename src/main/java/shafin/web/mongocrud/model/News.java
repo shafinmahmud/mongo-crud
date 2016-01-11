@@ -83,6 +83,15 @@ public class News {
 	public void setCategoryTags(ArrayList<String> categoryTags) {
 		this.categoryTags = categoryTags;
 	}
+	
+	public void setCategoryTags(String categoryTags, String delimeter) {
+		String[] tags = categoryTags.split(delimeter);
+		ArrayList<String> listTags = new ArrayList<>();
+		for(String tag: tags){
+			listTags.add(tag);
+		}
+		this.categoryTags = listTags;			
+	}
 
 	public ArrayList<String> getKeywords() {
 		return keywords;
@@ -91,6 +100,16 @@ public class News {
 	public void setKeywords(ArrayList<String> keywords) {
 		this.keywords = keywords;
 	}
+	
+	public void setKeywords(String keywords, String delimeter) {
+		String[] keys = keywords.split(delimeter);
+		ArrayList<String> listKeys = new ArrayList<>();
+		for(String key: keys){
+			listKeys.add(key);
+		}
+		this.keywords = listKeys;			
+	}
+	
 	public String getAuthor() {
 		return author;
 	}

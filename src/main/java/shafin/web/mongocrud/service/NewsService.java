@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import shafin.web.mongocrud.model.News;
 import shafin.web.mongocrud.repository.NewsRepository;
@@ -18,15 +20,25 @@ public class NewsService {
 			return newsRepository.save(news);
 	}
 	
-	public Iterator<News> getAllNewsIterator(){
+	public Iterator<News> getNewsbyIterator(){
 		return newsRepository.findAll().iterator();
 	}
 	
-	public ArrayList<News> getAllNewsList(){
+	public ArrayList<News> getNewsbyArrayList(){
 		return makeCollection(newsRepository.findAll());
+	}
+	
+	public ArrayList<News> getNewsbyPagination(int p, int s){
+		Page<News> newsPage = newsRepository.findAll(new PageRequest(p, s));
+		ArrayList<News> newsList = new ArrayList<>();
+		for(News news: newsPage){
+			newsList.add(news);
+		}
+		return newsList;
 	}
 
 	public News insertNews(News news){
+		
 		return newsRepository.save(news);
 	}
 	

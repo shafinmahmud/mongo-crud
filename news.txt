@@ -1,0 +1,52 @@
+﻿db.news.insert({
+ source: "The Daily Star" ,
+ sourceLogo: "http://www.thedailystar.net/sites/all/themes/tds/logo.png",
+ newsUrl: "http://www.thedailystar.net/sports/%E2%80%98messi-miracle-god%E2%80%99-200230",
+ categoryTags: ["International","Sports"] ,
+ keywords: ["Football","Messi", "Barcelona", "Arda Turan"],
+ title:  "Messi is a miracle from God: Arda Turan" ,
+ author: "Goal.com",
+ postTime: "10:38 AM, January 11, 2016 ",
+ article: "<p>Barcelona midfielder Arda Turan believes superstar forward Lionel Messi is a miracle from God.</p><p>Arda, who joined Barcelona from Atletico Madrid during the close season when the club were barred from registering new players under Fifa transfer sanctions, made his long-awaited Liga debut in Saturday's 4-0 win over Granada.</p><p>Messi typically took centre stage with a hat-trick, although Arda had a hand in his heroics – crossing for the eighth-minute opener and cleverly dummying a pass to Neymar in the build-up to the Argentinian's third.</p><p>On Monday, Messi is favourite to collect the fifth Ballon d'Or of his career in Zurich and Arda told Turkish newspaper Sabah: I have never seen anyone like Leo Messi.</p><p>He is a miracle from God. I like it when he does his things on the field.</p>",
+ newsPhotos: [
+		{
+		  imageCaption: 
+		  "Lionel Messi (C) celebrates a goal with teammates Neymar (L) and Luis Suarez (R) during the Spanish league football match FC Barcelona vs Granada CF at the Camp Nou stadium in Barcelona on January 9, 2016. Photo: AFP",
+		  imageUrl: "http://www.thedailystar.net/sites/default/files/styles/very_big_1/public/feature/images/messi.jpg-ns_7.jpg?itok=AYNK5xtb"
+		},
+		{
+		  imageCaption: 
+		  "Lionel Messi (C) drives the ball past Espanyol's Chilean defender Enzo Roco (L) during the Spanish Copa del Rey match on January 6, 2015. Photo: AFP",
+		  imageUrl: "http://www.thedailystar.net/sites/default/files/styles/very_big_1/public/news/images/barca-messi.jpg-ns.jpg?itok=avQmAkl1"
+		}
+	    ]
+})
+
+
+#block-system-main > div.full-width.detailed-page > div.container.mid-section.zero-bottom.clearfix > div > div > div.middle-content > div.panel-pane.pane-views-panes.pane-news-details-panel-pane-14.push-left.clearfix.no-title.block
+
+
+site logo: 
+img.site-logo 
+
+source:    
+img.site-logo (from alt)
+
+category:  
+#block-system-main > div.full-width.detailed-page > div.container.detailed-header > 		           div.panel-pane.pane-views-panes.pane-breadcrumb-panel-pane-1.no-title.block
+
+post time: 
+#block-system-main > div.full-width.detailed-page > div.container.detailed-header > 	             div.panel-pane.pane-views-panes.pane-news-details-panel-pane-1.no-title.block > div > div
+
+title:     
+#block-system-main > div.full-width.detailed-page > div.container.detailed-header > div.panel-pane.pane-views-panes.pane-news-details-panel-pane-10.no-title.block > div
+
+author:    
+#block-system-main > div.full-width.detailed-page > div.container.mid-section.zero-bottom.clearfix > div > div > div.middle-content > div.panel-pane.pane-views-panes.pane-news-details-panel-pane-2.push-left.no-title.block > div
+
+article:  
+div.field-body
+
+image: 
+#block-system-main > div.full-width.detailed-page > div.container.mid-section.zero-bottom.clearfix > div > div > div.middle-content > div.panel-pane.pane-views-panes.pane-news-details-panel-pane-4.push-left.feature-image-pane.no-title.block > div
+

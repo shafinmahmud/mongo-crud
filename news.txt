@@ -4,19 +4,19 @@
  newsUrl: "http://www.thedailystar.net/sports/%E2%80%98messi-miracle-god%E2%80%99-200230",
  categoryTags: ["International","Sports"] ,
  keywords: ["Football","Messi", "Barcelona", "Arda Turan"],
- title:  "Messi is a miracle from God: Arda Turan" ,
+ title:  "বাংলা টেস্ট ডাটা" ,
  author: "Goal.com",
  postTime: "10:38 AM, January 11, 2016 ",
- article: "<p>Barcelona midfielder Arda Turan believes superstar forward Lionel Messi is a miracle from God.</p><p>Arda, who joined Barcelona from Atletico Madrid during the close season when the club were barred from registering new players under Fifa transfer sanctions, made his long-awaited Liga debut in Saturday's 4-0 win over Granada.</p><p>Messi typically took centre stage with a hat-trick, although Arda had a hand in his heroics – crossing for the eighth-minute opener and cleverly dummying a pass to Neymar in the build-up to the Argentinian's third.</p><p>On Monday, Messi is favourite to collect the fifth Ballon d'Or of his career in Zurich and Arda told Turkish newspaper Sabah: I have never seen anyone like Leo Messi.</p><p>He is a miracle from God. I like it when he does his things on the field.</p>",
+ article: "লেখা যদি দেখা যায় তাহলে ঠিক আছে",
  newsPhotos: [
 		{
 		  imageCaption: 
-		  "Lionel Messi (C) celebrates a goal with teammates Neymar (L) and Luis Suarez (R) during the Spanish league football match FC Barcelona vs Granada CF at the Camp Nou stadium in Barcelona on January 9, 2016. Photo: AFP",
+		  "Lionel Messi (C)",
 		  imageUrl: "http://www.thedailystar.net/sites/default/files/styles/very_big_1/public/feature/images/messi.jpg-ns_7.jpg?itok=AYNK5xtb"
 		},
 		{
 		  imageCaption: 
-		  "Lionel Messi (C) drives the ball past Espanyol's Chilean defender Enzo Roco (L) during the Spanish Copa del Rey match on January 6, 2015. Photo: AFP",
+		  "Lionel Messi (C)",
 		  imageUrl: "http://www.thedailystar.net/sites/default/files/styles/very_big_1/public/news/images/barca-messi.jpg-ns.jpg?itok=avQmAkl1"
 		}
 	    ]

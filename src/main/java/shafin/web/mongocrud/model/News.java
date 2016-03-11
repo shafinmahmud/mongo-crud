@@ -1,6 +1,5 @@
 package shafin.web.mongocrud.model;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -8,15 +8,18 @@
 <link rel="stylesheet"
 	href="../resources/lib/bootstrap/css/bootstrap.min.css"
 	th:href="@{/resources/lib/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
+	th:href="@{http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css}" />
+
 <link rel="stylesheet" href="../resources/css/header.css"
 	th:href="@{/resources/css/header.css}" />
-
-
-
+<link rel="stylesheet" href="../resources/css/footer.css"
+	th:href="@{/resources/css/footer.css}" />
 </head>
 
 <body>
-	<div id="custom-bootstrap-menu" class="navbar navbar-default "
+	<nav id="custom-bootstrap-menu" class="navbar navbar-default "
 		role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -33,9 +36,26 @@
 					<li><a href="./home.html" th:href="@{/}">Home</a></li>
 					<li><a href="./edit.html" th:href="@{/news/add}">Add News</a></li>
 				</ul>
+
+
+				<div class="col-sm-3 col-md-3 pull-right">
+					<form class="navbar-form" action="#" th:action="@{/news/search}">
+						<div class="input-group">
+							<input id="search_input" type="text" class="form-control" placeholder="Search"
+								name="q"></input>
+							<div class="input-group-btn">
+								<button class="btn btn-default" type="submit">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
+
 			</div>
 		</div>
-	</div>
+	</nav>
 
 	<!-- -->
 	<div class="container">
@@ -67,10 +87,7 @@
 											th:attr="data-target='#delete'+${rowStat.index}">
 											<span class="glyphicon glyphicon-trash"></span>
 										</button>
-									</p> 
-									
-									
-									<!-- Modal starts -->
+									</p> <!-- Modal starts -->
 									<div class="modal fade" id="delete" tabindex="-1" role="dialog"
 										aria-labelledby="edit" aria-hidden="true"
 										th:id="delete+${rowStat.index}">
@@ -95,21 +112,19 @@
 												</div>
 												<div class="modal-footer ">
 													<a type="button" class="btn btn-success"
-													th:href="@{/news/delete(id=${news.id})}">
-														<span class="glyphicon glyphicon-ok-sign"></span> Yes
-													</a>
-													<a type="button" class="btn btn-default"
-														data-dismiss="modal">
-														<span class="glyphicon glyphicon-remove"></span> No
+														th:href="@{/news/delete(id=${news.id})}"> <span
+														class="glyphicon glyphicon-ok-sign"></span> Yes
+													</a> <a type="button" class="btn btn-default"
+														data-dismiss="modal"> <span
+														class="glyphicon glyphicon-remove"></span> No
 													</a>
 												</div>
 											</div>
 											<!-- /.modal-content -->
 										</div>
-									</div> 
-									<!-- Modal ends -->
-									
-									
+									</div> <!-- Modal ends -->
+
+
 								</td>
 							</tr>
 
@@ -119,14 +134,12 @@
 
 					<div class="clearfix"></div>
 					<ul class="pagination pull-right">
-						<li class="disabled"><a href="#"><span
+						<li><a th:href="@{/news/all(page='0',size='10')}"><span
 								class="glyphicon glyphicon-chevron-left"></span></a></li>
-						<li class="active"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#"><span
+						<li class="active"><a
+							th:href="@{/news/all(page='0',size='10')}">1</a></li>
+						<li><a th:href="@{/news/all(page='1',size='10')}">2</a></li>
+						<li><a th:href="@{/news/all(page='1',size='10')}"><span
 								class="glyphicon glyphicon-chevron-right"></span></a></li>
 					</ul>
 
@@ -136,7 +149,54 @@
 		</div>
 	</div>
 
-	<!--         -->
+	<!--   footer      -->
+	<footer class="footer-distributed">
+		<div class="footer-left">
+			<h3>
+				NEWS <span>HuB</span>
+			</h3>
+			<p class="footer-links">
+				<a href="#">Home</a> · <a href="#">Add</a> · <a href="#">Edit</a> ·
+				<a href="#">About</a> · <a href="#">Faq</a> · <a href="#">Contact</a>
+			</p>
+			<p class="footer-company-name">NEWS Hub © 2015</p>
+		</div>
+		<div class="footer-center">
+			<div>
+				<i class="fa fa-map-marker"></i>
+				<p>
+					<span>IICT, SUST</span> Sylhet
+				</p>
+			</div>
+			<div>
+				<i class="fa fa-phone"></i>
+				<p>+880 1717 364467</p>
+			</div>
+			<div>
+				<i class="fa fa-envelope"></i>
+				<p>
+					<a href="mailto:support@company.com">shafin.mahmud@gmail.com</a>
+				</p>
+			</div>
+		</div>
+
+		<div class="footer-right">
+			<p class="footer-company-about">
+				<span>About me</span> <i>Some days are just bad days, that's
+					all. You have to experience sadness to know happiness, and I remind
+					myself that not every day is going to be a good day, that's just
+					the way it is!</i> <b>Dita Von Teese</b>
+			</p>
+
+			<div class="footer-icons">
+				<a href="#"><i class="fa fa-facebook"></i></a> <a
+					href="https://fb.com/shafin.mahmud"><i class="fa fa-twitter"></i></a>
+				<a href="#twitter.com/twitting.mahmud"><i class="fa fa-linkedin"></i></a>
+				<a href="https://github.com/shafinmahmud"><i
+					class="fa fa-github"></i></a>
+			</div>
+		</div>
+	</footer>
 
 	<script src="../resources/lib/jquery-2.1.4.min.js"
 		th:src="@{/resources/lib/jquery-2.1.4.min.js}" type="text/javascript">
@@ -147,6 +207,7 @@
 		type="text/javascript">
 		
 	</script>
+
 
 	<script>
 		$(document).ready(function() {

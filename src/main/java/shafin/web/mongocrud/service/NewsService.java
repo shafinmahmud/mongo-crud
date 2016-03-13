@@ -6,6 +6,7 @@ import java.util.Iterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import shafin.web.mongocrud.model.News;
 import shafin.web.mongocrud.repository.NewsRepository;
@@ -20,12 +21,21 @@ public class NewsService {
 			return newsRepository.save(news);
 	}
 	
+	public ArrayList<News> getNewsbySearch(String query){
+		return newsRepository.findByTitleleOrSourceOrArticleOrCateogryTagsLike(query);
+	}
+	
 	public Iterator<News> getNewsbyIterator(){
 		return newsRepository.findAll().iterator();
 	}
 	
-	public ArrayList<News> getNewsbyArrayList(){
-		return makeCollection(newsRepository.findAll());
+	@SuppressWarnings("unchecked")
+	public Page<News> getNewsbyArrayList(){
+		return (Page<News>) makeCollection(newsRepository.findAll());
+	}
+	
+	public Page<News> getNewsbyPageable(Pageable pageable){
+		return newsRepository.findAll(pageable);
 	}
 	
 	public ArrayList<News> getNewsbyPagination(int p, int s){

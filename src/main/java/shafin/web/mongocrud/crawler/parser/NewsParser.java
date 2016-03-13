@@ -1,11 +1,12 @@
 package shafin.web.mongocrud.crawler.parser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import shafin.web.mongocrud.model.NewsPhoto;
 
 public abstract class NewsParser {
-	
+
 	private String pageHtml;
 	
 	public String getPageHtml() {
@@ -16,23 +17,23 @@ public abstract class NewsParser {
 		this.pageHtml = pageHtml;
 	}
 
-	public  abstract String parseSource();
+	public  abstract String parseSource() throws IOException;
 
-	public  abstract String parseSourceLogo();
+	public  abstract String parseSourceLogo() throws IOException;
 
-	public  abstract String parseNewsUrl();
+	public  abstract String parseNewsUrl() throws IOException;
 
-	public  abstract ArrayList<String> parseCateogryTags();
+	public  abstract ArrayList<String> parseCateogryTags()throws IOException;
 
 	public  abstract ArrayList<String> parseKeyWords();
 
-	public  abstract String parseTitle();
+	public  abstract String parseTitle() throws IOException;
 
-	public  abstract String parseAuthor();
+	public  abstract String parseAuthor() throws IOException;
 
-	public  abstract String parsePostTime();
+	public  abstract String parsePostTime() throws IOException;
 
-	public  abstract String parseArticle();
+	public  abstract String parseArticle() throws IOException;
 
-	public  abstract ArrayList<NewsPhoto> parseNewsPhotos();
+	public  abstract ArrayList<NewsPhoto> parseNewsPhotos() throws IOException;
 }

@@ -2,11 +2,11 @@ package shafin.web.mongocrud.service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import shafin.web.mongocrud.model.News;
 import shafin.web.mongocrud.repository.NewsRepository;
@@ -29,13 +29,17 @@ public class NewsService {
 		return newsRepository.findAll().iterator();
 	}
 	
+	public List<News> getNewsbyList(){
+		return newsRepository.findAll();
+	}
+	
 	@SuppressWarnings("unchecked")
 	public Page<News> getNewsbyArrayList(){
 		return (Page<News>) makeCollection(newsRepository.findAll());
 	}
 	
-	public Page<News> getNewsbyPageable(Pageable pageable){
-		return newsRepository.findAll(pageable);
+	public Page<News> getNewsbyPagination(Integer p, int s){
+		return newsRepository.findAll(new PageRequest(p, s));
 	}
 	
 	public ArrayList<News> getNewsbyPagination(int p, int s){

@@ -1,19 +1,18 @@
 package shafin.web.mongocrud.controller;
 
-import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
+import org.springframework.beans.support.PagedListHolder;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import shafin.web.mongocrud.dto.NewsDto;
 import shafin.web.mongocrud.model.News;
-import shafin.web.mongocrud.model.NewsPhoto;
 import shafin.web.mongocrud.service.CrawlerService;
 import shafin.web.mongocrud.service.NewsService;
 
@@ -22,162 +21,65 @@ public class HomeController {
 
 	@Autowired
 	NewsService newsService;
-	
+
 	@Autowired
 	CrawlerService crawlerService;
 
+	private static final int PRODUCT_LIST_PAGE_SIZE = 10;
+	private static final String PRODUCT_LIST_BASEURL = "/news/all/page/";
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
-		return "redirect:/news/all?page=0&size=10";
+		return "redirect:/news/all/page/1";
 	}
+
 	
-	@RequestMapping(value = "/news/search", params = {"q"}, method = RequestMethod.GET)
-	public String search(@RequestParam("q") String query, Model model) {
-		
-		ArrayList<News> all = newsService.getNewsbySearch(query);
-		ArrayList<NewsDto> dtos = new ArrayList<>();
-		if (!all.isEmpty()) {
-			for (News news : all) {
-				dtos.add(convertToNewsDto(news));
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/news/all/page/{pageNumber}", method = RequestMethod.GET)
+	public String pagedNewsList(HttpServletRequest request, @PathVariable Integer pageNumber, Model model) {
+
+		PagedListHolder<News> pagedListHolder = (PagedListHolder<News>) request.getSession()
+				.getAttribute("newsList");
+
+		if (pagedListHolder == null) {
+			pagedListHolder = new PagedListHolder<News>(newsService.getNewsbyList());
+			pagedListHolder.setPageSize(PRODUCT_LIST_PAGE_SIZE);
+
+		} else {
+			final int goToPage = pageNumber - 1;
+			if (goToPage <= pagedListHolder.getPageCount() && goToPage >= 0) {
+				pagedListHolder.setPage(goToPage);
 			}
-			model.addAttribute("newsList", dtos);
 		}
+
+		request.getSession().setAttribute("newsList", pagedListHolder);
+
+		model.addAttribute("pager", currentPage(pagedListHolder));
+		model.addAttribute("newsList", pagedListHolder.getPageList());
 
 		return "home";
 	}
 
-	@RequestMapping(value = "/pagableblabla", method = RequestMethod.GET)
-    public String blog(Model uiModel, Pageable pageable) {
-		
-        PageWrapper<News> page = new PageWrapper<News>
-        	(newsService.getNewsbyPageable(pageable), "/news");
-        uiModel.addAttribute("news", page);
-        
-        return "home";
-    }
+	
 
-	@RequestMapping(value = "/news/all", params = { "page", "size" }, method = RequestMethod.GET)
-	public String showNewsTable(@RequestParam("page") int page, @RequestParam("size") int size, Model model) {
+	private Pager currentPage(PagedListHolder<?> pagedListHolder) {
 
-		ArrayList<News> all = newsService.getNewsbyPagination(page, size);
-		ArrayList<NewsDto> dtos = new ArrayList<>();
-		if (!all.isEmpty()) {
-			for (News news : all) {
-				dtos.add(convertToNewsDto(news));
-			}
-			model.addAttribute("newsList", dtos);
-		}
+		int currentIndex = pagedListHolder.getPage() + 1;
+		int beginIndex = Math.max(1, currentIndex - PRODUCT_LIST_PAGE_SIZE);
+		int endIndex = Math.min(beginIndex + 5, pagedListHolder.getPageCount());
+		int totalPageCount = pagedListHolder.getPageCount();
+		int totalItems = pagedListHolder.getNrOfElements();
+		String baseUrl = PRODUCT_LIST_BASEURL;
 
-		return "home";
-	}
-
-	@RequestMapping(value = "/news", params = { "id" }, method = RequestMethod.GET)
-	public String news(@RequestParam("id") String id, Model model) {
-		model.addAttribute("news", newsService.getNews(id));
-		return "news";
-	}
-
-	@RequestMapping(value = "/news/edit", params = { "id" }, method = RequestMethod.GET)
-	public String showEdit(@RequestParam("id") String id, Model model) {
-		NewsDto dto = convertToNewsDto(newsService.getNews(id));
-		// System.out.println(dto.toString());
-		model.addAttribute("newsUpdate", dto);
-		return "edit";
-	}
-
-	@RequestMapping(value = "/news/update", method = RequestMethod.POST)
-	public String processNewsUpdate(@ModelAttribute(value = "newsUpdate") NewsDto newsUpdate) {
-		// System.out.println(newsUpdate.toString());
-		return "redirect:/news?id=" + newsService.updateNews(convertToNews(newsUpdate)).getId();
-	}
-
-	@RequestMapping(value = "/news/add", method = RequestMethod.GET)
-	public String showAdd(Model model) {
-		NewsDto addNews = new NewsDto();
-		ArrayList<NewsPhoto> photos = new ArrayList<>();
-
-		NewsPhoto photo = new NewsPhoto();
-		photo.setImageUrl("");
-		photo.setImageCaption("");
-		photos.add(photo);
-
-		addNews.setNewsPhotos(photos);
-		model.addAttribute("newsAdd", addNews);
-		return "add";
-	}
-
-	@RequestMapping(value = "/news/insert", method = RequestMethod.POST, params="action=save")
-	public String processNewsAdd(@ModelAttribute(value = "newsAdd") NewsDto newsAdd) {
-		// System.out.println(newsAdd.toString());
-		return "redirect:/news?id=" + newsService.insertNews(convertToNews(newsAdd)).getId();
+		Pager pager = new Pager();
+		pager.setBeginIndex(beginIndex);
+		pager.setEndIndex(endIndex);
+		pager.setCurrentIndex(currentIndex);
+		pager.setTotalPageCount(totalPageCount);
+		pager.setTotalItems(totalItems);
+		pager.setBaseUrl(baseUrl);
+		return pager;
 	}
 	
-	@RequestMapping(value = "/news/insert", method = RequestMethod.POST, params="action=crawl")
-	public String processNewsCrawl(@ModelAttribute(value = "newsAdd") NewsDto newsAdd, Model model) {
-		
-		News news = crawlerService.parseNewsUrl(newsAdd.getNewsUrl());
-		
-		newsAdd.setSource(news.getSource());
-		newsAdd.setSourceLogo(news.getSourceLogo());
-		
-		newsAdd.setCategoryTags(news.getCategoryTags(), ";");
-		newsAdd.setTitle(news.getTitle());
-		newsAdd.setPostTime(news.getPostTime());
-		newsAdd.setAuthor(news.getAuthor());
-		
-		newsAdd.setArticle(news.getArticle());
-		
-		newsAdd.setNewsPhotos(news.getNewsPhotos());
-		
-		/*NewsDto addNews = new NewsDto();
-		ArrayList<NewsPhoto> photos = new ArrayList<>();
-
-		NewsPhoto photo = new NewsPhoto();
-		photo.setImageUrl("");
-		photo.setImageCaption("");
-		photos.add(photo);
-
-		addNews.setNewsPhotos(photos);*/
-		model.addAttribute("newsAdd", newsAdd);
-		return "add";
-	}
-
-	@RequestMapping(value = "/news/delete", params = { "id" }, method = RequestMethod.GET)
-	public String deleteNews(@RequestParam("id") String id) {
-		newsService.deleteNews(id);
-		return "redirect:/";
-	}
-
-	private NewsDto convertToNewsDto(News news) {
-		NewsDto dto = new NewsDto();
-		dto.setId(news.getId());
-		dto.setSource(news.getSource());
-		dto.setSourceLogo(news.getSourceLogo());
-		dto.setNewsUrl(news.getNewsUrl());
-		dto.setCategoryTags(news.getCategoryTags(), ";");
-		dto.setTitle(news.getTitle());
-		dto.setArticle(news.getArticle());
-		dto.setAuthor(news.getAuthor());
-		dto.setPostTime(news.getPostTime());
-		dto.setKeywords(news.getKeywords(), ";");
-		dto.setNewsPhotos(news.getNewsPhotos());
-		return dto;
-	}
-
-	private News convertToNews(NewsDto dto) {
-		News news = new News();
-		news.setId(dto.getId());
-		news.setSource(dto.getSource());
-		news.setSourceLogo(dto.getSourceLogo());
-		news.setNewsUrl(dto.getNewsUrl());
-		news.setCategoryTags(dto.getCategoryTags(), ";");
-		news.setTitle(dto.getTitle());
-		news.setArticle(dto.getArticle());
-		news.setAuthor(dto.getAuthor());
-		news.setPostTime(dto.getPostTime());
-		news.setKeywords(dto.getKeywords(), ";");
-		news.setNewsPhotos(dto.getNewsPhotos());
-		return news;
-	}
 
 }
